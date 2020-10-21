@@ -1,0 +1,5 @@
+.imageAliments{
+    max-height: 120px;
+    width: auto;
+    object-fit: cover;
+}
