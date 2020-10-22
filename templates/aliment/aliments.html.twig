@@ -1,39 +1,54 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Page des aliments{% endblock %}
-{% block monTitre %}Liste des aliments{% endblock %}
+{% block monTitre %}
+    Liste des aliments
+    {% if isCalorie %}
+    avec moins de 50 calories
+    {% elseif isGlucide  %}
+    avec moins de 5gr de glucides  
+    {% endif %}
+{% endblock %}
 {% block body %}
-<div class="row">
-    {% for aliment in aliments %}
-        <div class="col-12 col-md-6 col-lg-4 col-xl-3">
-            <div class="card border-primary mb-3 mx-auto" style="max-width: 20rem;">
-                <div class="card-header text-center"><img src="images/{{aliment.image}}"  class="card-img-top imageAliments"></div>
-                <div class="card-body">
-                    <h4 class="card-title text-center border-bottom pb-2 mx-3 border-primary">{{aliment.nom}}</h4>
-                    <p class="card-text">
-                        <h4 class="text-center">Prix (kilo): {{aliment.prix}} $</h4>
-                        <table class="table text-center table-bordered border">
-                              <tr class="table-primary ">
-                                <td>Propriété</td>
-                                <td>Valeur (100g)</td>
-                              </tr>
-                              <tr>
-                                <td>Protéines</td>
-                                <td>{{aliment.proteine}}</td>
-                              </tr>
-                              <tr>
-                                <td>Glucides</td>
-                                <td>{{aliment.glucide}}</td>
-                              </tr>
-                              <tr>
-                                <td>Lipides</td>
-                                <td>{{aliment.lipide}}</td>
-                              </tr>
-                        </table> 
-                    </p>
+<a href="{{ path("aliments") }}" class="m-3 btn btn-primary">Tous nos aliments</a>
+<a href="{{ path("alimentsParCalorie", {"calorie":50}) }}" class="m-3 btn btn-primary">Aliments avec moins de 50 calories au 100gr</a>
+<a href="{{ path("alimentsParGlucides", {"glucide":5}) }}" class="m-3 btn btn-primary">Aliments avec moins de 5 gr de glucides au 100gr</a>
+    <div class="row mt-3">
+        {% for aliment in aliments %}
+            <div class="col-12 col-md-6 col-lg-4 col-xl-3">
+                <div class="card border-primary mb-3 mx-auto" style="max-width: 20rem;">
+                    <div class="card-header text-center"><img src="{{ asset('images/' ~ aliment.image) }}"  class="card-img-top imageAliments"></div>
+                    <div class="card-body">
+                        <h4 class="card-title text-center border-bottom pb-2 mx-3 border-primary">{{aliment.nom}}</h4>
+                        <p class="card-text">
+                            <h4 class="text-center">Prix (kilo): {{aliment.prix}} $</h4>
+                            <table class="table text-center table-bordered border">
+                                <tr class="table-primary ">
+                                    <td>Propriété</td>
+                                    <td>Valeur (100g)</td>
+                                </tr>
+                                <tr>
+                                    <td>Calories</td>
+                                    <td>{{aliment.calorie}}</td>
+                                </tr>
+                                <tr>
+                                <tr>
+                                    <td>Protéines</td>
+                                    <td>{{aliment.proteine}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Glucides</td>
+                                    <td>{{aliment.glucide}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Lipides</td>
+                                    <td>{{aliment.lipide}}</td>
+                                </tr>
+                            </table> 
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
-    {% endfor %}
-</div>
+        {% endfor %}
+    </div>
 {% endblock %}
