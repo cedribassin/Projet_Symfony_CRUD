@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin{% endblock %}
+{% block monTitre %}
+{% if isModification %}
+  Modification de l'aliment: {{aliment.nom}}
+  {% else %}
+  Ajout d'un aliment
+{% endif %}
+{% endblock %}
+{% block body %}
+<div class="p-2">
+<!-- form_start pour indiquer que l'on commence notre formulaire
+form_widget pour afficher le formulaire (de base), et form_end pour le fermer -->
+  {{form_start(form)}}
+    <div class="row">
+        <div class="col-6">
+            <img src="{{asset('images/' ~ aliment.image)}}" style="width: 25%;">
+              <!--Pour personaliser on prend la fonction form_row:
+  1-on indique sur quel élément (ici le nom) 
+  2- on indique qu'on rajoute un attribut ("attr") qui sera de type class avec la valeur text-danger
+  3- on peut modifier aussi les info liées au label en rajoutant "label":"..." -->
+            <div>{{form_row(form.image)}}</div>
+            <div>{{ form_row(form.nom, {"attr":{'class':'text-danger'}, "label":"Nom de l'aliment"}) }}</div>
+        </div>
+        <div class="col-6">
+            {{form_widget(form)}}
+        </div>
+    </div>
+      <input type="submit" class="btn btn-primary" value="Enregistrer">
+  {{form_end(form)}}
+</div>
+{% endblock %}

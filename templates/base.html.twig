@@ -15,8 +15,13 @@
             </button>     
             <div class="collapse navbar-collapse" id="navbarColor01">
               <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                  <a class="nav-link" href="{{path('aliments')}}">Aliments <span class="sr-only">(current)</span></a>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Aliments</a>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{{path('aliments')}}">Aliments</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{path('admin_admin_aliments')}}">Administration</a>
+                  </div>
                 </li>
           </nav>
         <h1 class="mx-2">{% block monTitre %}{% endblock %}</h1>

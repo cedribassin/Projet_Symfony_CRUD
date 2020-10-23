@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page d'administration{% endblock %}
+{% block monTitre %}Administration des aliments{% endblock %}
+{% block body %}
+<a href="{{path('admin_admin_creation')}}" class="m-3 btn btn-success">Ajouter</a>
+<div>
+    <table class="table mx-2">
+          <tr class="table-primary">
+            <th scope="col">Image</th>
+            <th scope="col">Aliments</th>
+            <th scope="col">Prix</th>
+            <th scope="col">Calories</th>
+            <th scope="col">Protéine</th>
+            <th scope="col">Glucides</th>
+            <th scope="col">Lipides</th>
+            <th scope="col">Actions</th>
+          </tr>
+          {% for aliment in aliments %}
+          <tr>
+            <td><img src="{{ asset('images/' ~ aliment.image) }}" style="height: 50px; width:auto;"></td>
+            <td>{{aliment.nom}}</td>
+            <td>{{aliment.prix}}</td>
+            <td>{{aliment.calorie}}</td>
+            <td>{{aliment.proteine}}</td>
+            <td>{{aliment.glucide}}</td>
+            <td>{{aliment.lipide}}</td>
+            <td>
+                <a href="{{path('admin_admin_modification', {'id': aliment.id })}}" class="m-2 btn btn-warning">Modifier</a>
+                <form method="POST" action="{{path('admin_admin_suppression', {'id': aliment.id })}}" style="display:inline-block" onsubmit="return confirm('Confirmer la suppression ?')">
+                    <!--On rajoutant la ligne suivants, on va pouvoir tester dans le controller sur quelle méthode
+                    on veut recevoir les informations (CF dans les routes de la fonction suppressionAliment())-->
+                    <input type="hidden" name="_method" value="delete">
+                    <!-- On rajoute un token pour sécuriser la supression avec la fonction twig csrf_token(), SUP correspond 
+                    à une valeur que l'on a définit, ça aurait pu être autre chose... -->
+                    <input type="hidden" name="_token" value="{{csrf_token('SUP' ~ aliment.id)}}">
+                    <input type="submit" class="btn btn-danger" value="supprimer">
+                </form>
+                </td>
+          </tr>
+          {% endfor %}
+      </table>
+</div>
+
+{% endblock %}
