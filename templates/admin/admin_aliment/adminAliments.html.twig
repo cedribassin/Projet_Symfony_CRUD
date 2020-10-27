@@ -3,6 +3,11 @@
 {% block title %}Page d'administration{% endblock %}
 {% block monTitre %}Administration des aliments{% endblock %}
 {% block body %}
+{% for message in app.flashes('success') %}<!--On récupère tous les messages de type success-->
+  <div class="alert alert-success">
+    {{message}}
+  </div>
+{% endfor %}
 <a href="{{path('admin_admin_creation')}}" class="m-3 btn btn-success">Ajouter</a>
 <div>
     <table class="table mx-2">

@@ -44,10 +44,14 @@ class AdminAlimentController extends AbstractController
         $form->handleRequest($request);
         //On vérifie si notre formulaire à été soumis et s'il est valide:
         if($form->isSubmitted() && $form->isValid()){
-            //si c'est le cas, on valide les info en utilisant la classe ObjectManager et on 
+            //On test s'il s'agit d'un ajout ou d'une modification pour l'utiliser dans addFlash():
+                $modif = $aliment->getId() !== null; 
+            //si c'est le cas, on valide les info en utilisant la classe EntityManagerInterface et on 
             // envoie en BDD avec la fonction flush:
             $entityManager->persist($aliment);
             $entityManager->flush();
+            //Pour envoyer une alerte:
+            $this->addFlash("success", $modif ? "La modification a été effectuée" : "L'ajout a été effectuée");
             //Lorsque les actions sont réalisées on redirige vers la page souhaitée:
             return $this->redirectToRoute("admin_admin_aliments");
         }
@@ -74,6 +78,7 @@ class AdminAlimentController extends AbstractController
         //On prépare la requête de suppression avec remove() et on envoie en BDD avec flush()
         $entityManager->remove($aliment);
         $entityManager->flush();
+        $this->addFlash("success","La suppression a été effectuée");
         return $this->redirectToRoute("admin_admin_aliments");
         }
     }
