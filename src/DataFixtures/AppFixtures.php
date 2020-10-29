@@ -13,7 +13,7 @@ class AppFixtures extends Fixture
         // $product = new Product();
         // $manager->persist($product);
 
-        $aliment1 = new Aliment();
+      /*   $aliment1 = new Aliment();
         $aliment1->setNom("Carotte")
         ->setPrix(1.80)
         ->setImage("aliments/carotte.png")
@@ -53,6 +53,6 @@ class AppFixtures extends Fixture
         ->setLipide(0.25);
         $manager->persist($aliment4);
 
-        $manager->flush();
+        $manager->flush(); */
     }
 }
