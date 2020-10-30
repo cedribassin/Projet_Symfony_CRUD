@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin{% endblock %}
+{% block monTitre %}
+{% if isModification %}
+  Modification du type d'aliment: {{type.libelle}}
+  {% else %}
+  Ajout d'un type
+{% endif %}
+{% endblock %}
+{% block body %}
+{% for message in app.flashes('success') %}
+  <div class="alert alert-success">
+    {{message}}
+  </div>
+{% endfor %}
+<div class="p-2">
+  {{form_start(form)}}
+    <div class="row">
+        <div class="col-6">
+            {% if isModification %}
+                <img src="{{asset('images/types/' ~ type.image)}}" style="width: 25%;">
+            {% endif %}  
+            <!--Pour personaliser on prend la fonction form_row:
+  1-on indique sur quel élément (ici le nom) 
+  2- on indique qu'on rajoute un attribut ("attr") qui sera de type class avec la valeur text-danger
+  3- on peut modifier aussi les info liées au label en rajoutant "label":"..." -->
+           {#  <div>{{form_row(form.imageFile)}}</div> #}
+            <div>{{ form_row(form.libelle, {"attr":{'class':'text-danger'}, "label":"Nom du type d'aliment"}) }}</div>
+        </div>
+        <div class="col-6">
+            {{form_widget(form)}}
+        </div>
+    </div>
+      <input type="submit" class="btn btn-primary" value="Enregistrer">
+  {{form_end(form)}}
+</div>
+{% endblock %}

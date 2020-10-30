@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin Types{% endblock %}
+{% block monTitre %}Administration Types{% endblock %}
+{% block body %}
+{% for message in app.flashes('success') %}<!--On récupère tous les messages de type success-->
+  <div class="alert alert-success">
+    {{message}}
+  </div>
+{% endfor %}
+<a href="{{path('admin_createType')}}" class="m-3 btn btn-success">Ajouter</a>
+    <div>
+        <table class="table mx-2">
+              <tr class="table-primary">
+                <th scope="col">Image</th>
+                <th scope="col">Types</th>
+                <th scope="col">Actions</th>
+              </tr>
+              {% for type in types %}
+              <tr>
+                <td><img src="{{ asset('images/types/' ~ type.image) }}" style="height: 50px; width:auto;"></td>
+                <td><strong>{{type.libelle}}</strong></td>
+                <td>
+                    <a href="{{path('modifType', {'id': type.id})}}" class="m-2 btn btn-warning">Modifier</a>
+                    <form method="POST" action="{{path('admin_admin_suppression_type', {'id': type.id })}}" style="display:inline-block" onsubmit="return confirm('Confirmer la suppression ?')">
+                        <!--On rajoutant la ligne suivants, on va pouvoir tester dans le controller sur quelle méthode
+                        on veut recevoir les informations (CF dans les routes de la fonction suppressionAliment())-->
+                        <input type="hidden" name="_method" value="delete">
+                        <!-- On rajoute un token pour sécuriser la supression avec la fonction twig csrf_token(), SUP correspond 
+                        à une valeur que l'on a définit, ça aurait pu être autre chose... -->
+                        <input type="hidden" name="_token" value="{{csrf_token('SUPR' ~ type.id)}}">
+                        <input type="submit" class="btn btn-danger" value="supprimer">
+                    </form>
+                    </td>
+              </tr>
+              {% endfor %}
+          </table>
+    </div>  
+{% endblock %}

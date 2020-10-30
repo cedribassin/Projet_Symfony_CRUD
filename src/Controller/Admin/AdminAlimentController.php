@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 class AdminAlimentController extends AbstractController
 {
     /**
-     * @Route("/admin/admin/aliment", name="admin_admin_aliments")
+     * @Route("/admin/aliment", name="admin_admin_aliments")
      */
     public function index(AlimentRepository $repository)
     {
@@ -25,8 +25,8 @@ class AdminAlimentController extends AbstractController
     }
 
     /**
-     * @Route("/admin/admin/creation", name="admin_admin_creation")
-     * @Route("/admin/admin/{id}", name="admin_admin_modification", methods="GET|POST")
+     * @Route("/admin/creation", name="admin_admin_creation")
+     * @Route("/admin/{id}", name="admin_admin_modification", methods="GET|POST")
      */
     //Fonction qui permet de créer, ou récupérer un aliment pour le modifier (en rajoutant methods="GET|POST" 
     // dans les routes, on va pouvoir distinguer son url de celle présente dans la fonction suppressionAliment())
@@ -45,7 +45,7 @@ class AdminAlimentController extends AbstractController
         //On vérifie si notre formulaire à été soumis et s'il est valide:
         if($form->isSubmitted() && $form->isValid()){
             //On test s'il s'agit d'un ajout ou d'une modification pour l'utiliser dans addFlash():
-                $modif = $aliment->getId() !== null; 
+            $modif = $aliment->getId() !== null; 
             //si c'est le cas, on valide les info en utilisant la classe EntityManagerInterface et on 
             // envoie en BDD avec la fonction flush:
             $entityManager->persist($aliment);
@@ -66,7 +66,7 @@ class AdminAlimentController extends AbstractController
     }
 
     /**
-     * @Route("/admin/admin/{id}", name="admin_admin_suppression", methods="delete")
+     * @Route("/admin/{id}", name="admin_admin_suppression", methods="delete")
      */
     //Fonction permettant de supprimer un aliment (en rajoutant methods="delete" dans les routes, on va pouvoir distinguer
     // son url de celle présente dans la fonction ajoutEtModification())
