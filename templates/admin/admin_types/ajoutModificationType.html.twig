@@ -25,7 +25,7 @@
   1-on indique sur quel élément (ici le nom) 
   2- on indique qu'on rajoute un attribut ("attr") qui sera de type class avec la valeur text-danger
   3- on peut modifier aussi les info liées au label en rajoutant "label":"..." -->
-           {#  <div>{{form_row(form.imageFile)}}</div> #}
+            <div>{{form_row(form.imageFile)}}</div>
             <div>{{ form_row(form.libelle, {"attr":{'class':'text-danger'}, "label":"Nom du type d'aliment"}) }}</div>
         </div>
         <div class="col-6">
