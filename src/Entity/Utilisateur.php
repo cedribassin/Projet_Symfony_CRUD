@@ -5,18 +5,15 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UtilisateurRepository;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=UtilisateurRepository::class)
  * @UniqueEntity(
  * fields={"username"},
- * message="Le user existe déjà"
- * )
+ * message="Ce nom existe déjà")
  */
-//UniqueEntity permet d'indiquer le nom d'utilisateur doit être unique => permet d'éviter
-// d'avoir 2 utilisateurs avec le même nom
 class Utilisateur implements UserInterface
 {
     /**
@@ -28,26 +25,22 @@ class Utilisateur implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Length(min=5, max=10, minMessage="Il faut plus de 5 caractères", maxMessage="Il faut moins de 10 caractères")
+     * @Assert\Length(min=3,max=10, minMessage="Le nom d'utilisateur doit être supérieur à 3", maxMessage="Le nom d'utilisateur doit être inférieur à 10")
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Length(min=5, max=10, minMessage="Il faut plus de 5 caractères", maxMessage="Il faut moins de 10 caractères")
+     * @Assert\Length(min=3,max=10, minMessage="Le nombre de caractère doit être supérieur à 3", maxMessage="Le nombre de caractère doit être inférieur à 10")
      */
     private $password;
 
     /**
-     * @Assert\Length(min=5, max=10, minMessage="Il faut plus de 5 caractères", maxMessage="Il faut moins de 10 caractères")
+     * @Assert\Length(min=3,max=10, minMessage="Le nombre de caractère doit être supérieur à 3", maxMessage="Le nombre de caractère doit être inférieur à 10")
      * @Assert\EqualTo(propertyPath="password", message="Les mots de passe sont différents")
      */
-    private $verificationPassword;
+    private $verifPassword;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $role;
 
     public function getId(): ?int
     {
@@ -78,45 +71,27 @@ class Utilisateur implements UserInterface
         return $this;
     }
 
-    public function getVerificationPassword(): ?string
+    public function getVerifPassword(): ?string
     {
-        return $this->verificationPassword;
+        return $this->verifPassword;
     }
 
-    public function setVerificationPassword(string $verificationPassword): self
+    public function setVerifPassword(string $verifPassword): self
     {
-        $this->verificationPassword = $verificationPassword;
-
+        $this->verifPassword = $verifPassword;
         return $this;
-    }
-
-    public function getRoles(){
-        return [$this->role];
-    }
-
-    public function getSalt(){
-
     }
 
     public function eraseCredentials(){
 
     }
 
-    public function getRole(): ?string
-    {
-        return $this->role;
+
+    public function getSalt(){
+
     }
 
-    //Ce setter determine le role de base pour l'utilisateur
-    public function setRole(?string $role): self
-    {
-        //Si le role n'est pas défini (?), on envoit directement en BDD le rôle de user
-        if($role === null){
-            $this->role = "ROLE_USER";
-        } else {
-            $this->role = $role;
-        }
-        return $this;
+    public function getRoles(){
+        return ['ROLE_USER'];
     }
-
 }

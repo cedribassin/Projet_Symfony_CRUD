@@ -19,6 +19,7 @@ class AdminSecuController extends AbstractController
     public function index(Request $request, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $encoder)
     {
         $utilisateur = new Utilisateur();
+
         $form = $this->createForm(InscriptionType::class, $utilisateur);
 
         $form->handleRequest($request);
@@ -30,9 +31,13 @@ class AdminSecuController extends AbstractController
             $entityManager->persist($utilisateur);
             $entityManager->flush();
             return $this->redirectToRoute("aliments");
+
         }
+
+            
+        
         return $this->render('admin_secu/inscription.html.twig', [
-            "form" => $form->createView()
+            "form"=>$form->createView()
         ]);
     }
 

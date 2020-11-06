@@ -8,7 +8,7 @@
     {{message}}
   </div>
 {% endfor %}
-<a href="{{path('admin_admin_creation')}}" class="m-3 btn btn-success">Ajouter</a>
+<a href="{{path('admin_creation')}}" class="m-3 btn btn-success">Ajouter</a>
 <div>
     <table class="table mx-2">
           <tr class="table-primary">
@@ -33,8 +33,8 @@
             <td>{{aliment.glucide}}</td>
             <td>{{aliment.lipide}}</td>
             <td>
-                <a href="{{path('admin_admin_modification', {'id': aliment.id })}}" class="m-2 btn btn-warning">Modifier</a>
-                <form method="POST" action="{{path('admin_admin_suppression', {'id': aliment.id })}}" style="display:inline-block" onsubmit="return confirm('Confirmer la suppression ?')">
+                <a href="{{path('admin_modification', {'id': aliment.id })}}" class="m-2 btn btn-warning">Modifier</a>
+                <form method="POST" action="{{path('admin_suppression', {'id': aliment.id })}}" style="display:inline-block" onsubmit="return confirm('Confirmer la suppression ?')">
                     <!--On rajoutant la ligne suivants, on va pouvoir tester dans le controller sur quelle méthode
                     on veut recevoir les informations (CF dans les routes de la fonction suppressionAliment())-->
                     <input type="hidden" name="_method" value="delete">

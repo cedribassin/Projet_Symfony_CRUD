@@ -13,12 +13,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AdminTypesController extends AbstractController
 {
     /**
-     * @Route("/admin/admin/types", name="admin_admin_types")
+     * @Route("/admin/type", name="adminTypes")
      */
     public function index(TypeRepository $repo)
     {
         $types = $repo->findAll();
-        return $this->render('admin/admin_types/adminTypes.html.twig', [
+        return $this->render('admin/adminTypes/adminTypes.html.twig', [
             "types" => $types
         ]);
     }
@@ -40,9 +40,9 @@ class AdminTypesController extends AbstractController
             $entityManager->persist($type);
             $entityManager->flush();
             $this->addFlash("success", $modif ? "La modification a été effectuée" : "L'ajout a été effectuée");
-            return $this->redirectToRoute("admin_admin_types");
+            return $this->redirectToRoute("admin_types");
         }
-        return $this->render('admin/admin_types/ajoutModificationType.html.twig', [
+        return $this->render('admin/adminTypes/ajoutModificationType.html.twig', [
             "type"=>$type,
             "form"=>$form->createView(),
             "isModification" => $type->getId() !== null 
@@ -60,7 +60,7 @@ class AdminTypesController extends AbstractController
         $entityManager->remove($type);
         $entityManager->flush();
         $this->addFlash("success","La suppression a été effectuée");
-        return $this->redirectToRoute("admin_admin_types");
+        return $this->redirectToRoute("admin_types");
         }
     }
 

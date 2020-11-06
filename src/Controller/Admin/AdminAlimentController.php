@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 class AdminAlimentController extends AbstractController
 {
     /**
-     * @Route("/admin/aliment", name="admin_admin_aliments")
+     * @Route("/admin/aliment", name="admin_aliments")
      */
     public function index(AlimentRepository $repository)
     {
@@ -25,8 +25,8 @@ class AdminAlimentController extends AbstractController
     }
 
     /**
-     * @Route("/admin/creation", name="admin_admin_creation")
-     * @Route("/admin/{id}", name="admin_admin_modification", methods="GET|POST")
+     * @Route("/admin/aliment/creation", name="admin_creation")
+     * @Route("/admin/aliment/{id}", name="admin_modification", methods="GET|POST")
      */
     //Fonction qui permet de créer, ou récupérer un aliment pour le modifier (en rajoutant methods="GET|POST" 
     // dans les routes, on va pouvoir distinguer son url de celle présente dans la fonction suppressionAliment())
@@ -53,7 +53,7 @@ class AdminAlimentController extends AbstractController
             //Pour envoyer une alerte:
             $this->addFlash("success", $modif ? "La modification a été effectuée" : "L'ajout a été effectuée");
             //Lorsque les actions sont réalisées on redirige vers la page souhaitée:
-            return $this->redirectToRoute("admin_admin_aliments");
+            return $this->redirectToRoute("admin_aliments");
         }
         return $this->render('admin/admin_aliment/modifEtAjoutAliment.html.twig', [
             "aliment"=>$aliment,
@@ -66,7 +66,7 @@ class AdminAlimentController extends AbstractController
     }
 
     /**
-     * @Route("/admin/{id}", name="admin_admin_suppression", methods="delete")
+     * @Route("/admin/{id}", name="admin_suppression", methods="delete")
      */
     //Fonction permettant de supprimer un aliment (en rajoutant methods="delete" dans les routes, on va pouvoir distinguer
     // son url de celle présente dans la fonction ajoutEtModification())
@@ -79,7 +79,7 @@ class AdminAlimentController extends AbstractController
         $entityManager->remove($aliment);
         $entityManager->flush();
         $this->addFlash("success","La suppression a été effectuée");
-        return $this->redirectToRoute("admin_admin_aliments");
+        return $this->redirectToRoute("admin_aliments");
         }
     }
 }
